@@ -6,7 +6,7 @@
 /*   By: jaewoo <jaewoo@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 00:38:10 by jaewoo            #+#    #+#             */
-/*   Updated: 2022/07/13 01:00:08 by jaewoo           ###   ########.fr       */
+/*   Updated: 2022/07/13 23:47:53 by jaewoo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,56 @@ int	check_extention(char *filename)
 		return (0);
 	if (filename[i - 4] != '.' || filename[i - 3] != 'b'
 		|| filename[i - 2] != 'e' || filename[i - 1] != 'r')
+		return (0);
+	return (1);
+}
+
+int	check_validity(t_mlx *mlx, char **map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < mlx->assets->map_height)
+	{
+		j = 0;
+		while (j < mlx->assets->map_width)
+		{
+			if (!(map[i][j] == '0' || map[i][j] == '1' || map[i][j] == 'p' ||
+				map[i][j] == 'C' || map[i][j] == 'E'))
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	check_elements(t_mlx *mlx, char **map)
+{
+	int	i;
+	int	j;
+	int	count_c;
+	int	count_e;
+	int	count_p;
+
+	i = ((count_c = 0, count_e = 0, count_p = 0), 0);
+	while (i < mlx->assets->map_height)
+	{
+		j = 0;
+		while (j < mlx->assets->map_width)
+		{
+			if (map[i][j] == 'C')
+				count_c++;
+			if (map[i][j] == 'E')
+				count_e++;
+			if (map[i][j] == 'P')
+				count_p++;
+			j++;
+		}
+		i++;
+	}
+	if (count_c < 1 || count_e < 1 || 1 != count_p)
 		return (0);
 	return (1);
 }
